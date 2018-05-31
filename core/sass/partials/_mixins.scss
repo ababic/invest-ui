@@ -1,0 +1,23 @@
+
+@import '../partials/vars';
+
+@mixin focus {
+  outline: $focus-yellow solid 3px;
+
+  &:active {
+    color: $mid-blue;
+  }
+}
+
+@mixin active {
+  background-color: $focus-yellow;
+}
+
+@mixin red-underline {
+  border-bottom: 2px solid $great-red;
+}
+
+@mixin adaptive-focus($colour) {
+  @include focus;
+  color: adaptive-color($colour);
+}

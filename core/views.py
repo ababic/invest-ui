@@ -34,7 +34,7 @@ class LandingPageCMSView(
     CMSFeatureFlagMixin, TemplateView
 ):
     active_view_name = 'index'
-    template_name = 'core/landing-page.html'
+    template_name = 'core/landing_page.html'
 
     def get_context_data(self, *args, **kwargs):
         return super().get_context_data(

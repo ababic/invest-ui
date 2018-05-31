@@ -1,0 +1,14 @@
+
+@import '../partials/vars';
+@import '../partials/mixins';
+
+.section-underlined {
+  padding-top: $spacing-4;
+
+  .container:after {
+    @include red-underline
+    content: '';
+    padding-bottom: $spacing-1 + $spacing-3;
+    display: block;
+  }
+}

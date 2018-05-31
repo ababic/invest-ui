@@ -1,0 +1,19 @@
+
+@import '../partials/mixins';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a:focus {
+  @include focus;
+}
+
+a:focus:active {
+  @include active;
+}
+
+a.labelled-card:focus:active {
+  background-color: inherit;
+}
