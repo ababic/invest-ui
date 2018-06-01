@@ -20,8 +20,3 @@
 @mixin red-underline {
   border-bottom: 2px solid $great-red;
 }
-
-@mixin adaptive-focus($colour) {
-  @include link-focus;
-  color: adaptive-color($colour);
-}

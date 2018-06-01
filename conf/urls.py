@@ -48,6 +48,21 @@ urlpatterns = [
         core.views.SetupGuidePageCMSView.as_view(),
         name="guide-page"
     ),
+    url(
+        r"^contact/$",
+        core.views.ContactFormView.as_view(),
+        name="contact"
+    ),
+    url(
+        r"^terms-and-conditions/$",
+        core.views.TermsAndConditionsView.as_view(),
+        name="terms-and-conditions"
+    ),
+    url(
+        r"^privacy-and-cookies/$",
+        core.views.PrivacyAndCookiesView.as_view(),
+        name="privacy-and-cookies"
+    ),
 ]
 
 

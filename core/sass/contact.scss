@@ -1,0 +1,19 @@
+
+@import 'partials/default';
+@import 'partials/vars';
+@import 'partials/mixins';
+
+.heading-medium {
+  font-weight: 400;
+}
+
+.form-label,
+.form-hint,
+input.autocomplete__input {
+  width: 50%;
+}
+
+textarea,
+.form-hint {
+  margin-top: $spacing-4;
+}

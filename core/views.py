@@ -11,8 +11,13 @@ from django.views.generic.edit import FormView
 from django.views.generic.base import RedirectView
 
 from api_client import api_client
+from core.helpers import cms_client, handle_cms_response
 from core import forms, helpers, mixins
 
+from directory_cms_client.constants import (
+    EXPORT_READINESS_TERMS_AND_CONDITIONS_SLUG,
+    EXPORT_READINESS_PRIVACY_AND_COOKIES_SLUG,
+)
 
 ZENPY_CREDENTIALS = {
     'email': settings.ZENDESK_EMAIL,
@@ -149,50 +154,41 @@ class SetupGuidePageCMSView(
         return helpers.handle_cms_response(response)
 
 
-class LeadGenerationFormView(
-    mixins.EnableTranslationsMixin, FormView
-):
-    success_template = 'lead-generation-success.html'
-    template_name = 'lead-generation.html'
-    template_name_bidi = 'bidi/lead-generation.html'
-    form_class = forms.LeadGenerationForm
+class ContactFormView(TemplateView):
+    template_name = 'core/contact.html'
 
-    def get_or_create_zendesk_user(self, cleaned_data):
-        zendesk_user = ZendeskUser(
-            name=cleaned_data['full_name'],
-            email=cleaned_data['email_address'],
+    def get_context_data(self, *args, **kwargs):
+        return super().get_context_data(
+            contact_form=forms.ContactForm(),
+            *args, **kwargs
         )
-        return zenpy_client.users.create_or_update(zendesk_user)
 
-    def create_zendesk_ticket(self, cleaned_data, zendesk_user):
-        description = (
-            'Name: {full_name}\n'
-            'Email: {email_address}\n'
-            'Company: {company_name}\n'
-            'Country: {country}\n'
-            'Comment: {comment}'
-        ).format(**cleaned_data)
-        ticket = Ticket(
-            subject=settings.ZENDESK_TICKET_SUBJECT,
-            description=description,
-            submitter_id=zendesk_user.id,
-            requester_id=zendesk_user.id,
+
+class TermsAndConditionsView(TemplateView):
+    template_name = 'core/plain_cms_page.html'
+
+    def get_context_data(self, *args, **kwargs):
+        response = cms_client.lookup_by_slug(
+            slug=EXPORT_READINESS_TERMS_AND_CONDITIONS_SLUG,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
         )
-        zenpy_client.tickets.create(ticket)
-
-    def form_valid(self, form):
-        zendesk_user = self.get_or_create_zendesk_user(form.cleaned_data)
-        self.create_zendesk_ticket(form.cleaned_data, zendesk_user)
-        return TemplateResponse(self.request, self.success_template)
+        return super().get_context_data(
+            page=handle_cms_response(response),
+            *args, **kwargs
+        )
 
 
-class AnonymousSubscribeFormView(FormView):
-    success_template = 'anonymous-subscribe-success.html'
-    template_name = 'anonymous-subscribe.html'
-    form_class = forms.AnonymousSubscribeForm
+class PrivacyAndCookiesView(TemplateView):
+    template_name = 'core/plain_cms_page.html'
 
-    def form_valid(self, form):
-        data = forms.serialize_anonymous_subscriber_forms(form.cleaned_data)
-        response = api_client.buyer.send_form(data)
-        response.raise_for_status()
-        return TemplateResponse(self.request, self.success_template)
+    def get_context_data(self, *args, **kwargs):
+        response = cms_client.lookup_by_slug(
+            slug=EXPORT_READINESS_PRIVACY_AND_COOKIES_SLUG,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
+        )
+        return super().get_context_data(
+            page=handle_cms_response(response),
+            *args, **kwargs
+        )

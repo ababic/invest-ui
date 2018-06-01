@@ -4,3 +4,11 @@
 @import 'components/header';
 @import 'components/footer';
 @import 'components/accordion';
+
+.hero {
+  padding-top: 0;
+}
+
+.intro {
+  margin-bottom: $spacing-3;
+}
