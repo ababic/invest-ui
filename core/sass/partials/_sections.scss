@@ -12,3 +12,15 @@
     display: block;
   }
 }
+
+.industry-list {
+  h2 {
+    margin-bottom: $spacing-2;
+  }
+}
+
+section.error-reporting {
+  padding: $spacing-1 0 0;
+  @extend .section-underlined;
+  padding-bottom: 0;
+}

@@ -1,0 +1,40 @@
+{% extends 'core/base_cms.html' %}
+{% load static from staticfiles %}
+{% load first_paragraph first_heading grouper from cms_tags %}
+
+{% block head_css %}
+  {{ block.super }}
+  <link href="{% static '/styles/setup-guide-landing-page.css' %}" media="all" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+{% include 'directory_components/hero.html' with hero_text="UK setup guide" %}
+
+<section class="setup-guide section-underlined">
+  <div class="container">
+    <div class="intro">
+      <div class="grid-row">
+        <div class="column-two-thirds">
+          <h2 class="heading-large">Your guide to setting up an overseas business in the UK</h2>
+          <p>The time to invest in the UK is now. If you’re ready to take the next step for your business, here’s how to do it</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-row">
+      <div class="column-third">
+        {% url 'setup-guide-page' as guide_page_url %}
+        {% include 'directory_components/card.html' with url=guide_page_url title='Apply for a UK visa' description='Anyone from outside of the European Economic Area and Switzerland may need to apply for a UK visa to work in the UK or visit for business reasons.' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/card.html' with url=guide_page_url title='Establish a base for business in the UK' description='The UK has a straightforward planning process, a wide range of properties, and incentives that help businesses to set up and expand.' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/card.html' with url=guide_page_url title='Hire skilled workers for your UK operations' description='The UK has a world-class pool of talent and business-friendly employment laws. You can also bring employees to the UK from other countries through a flexible visa system.' %}
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

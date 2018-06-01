@@ -1,0 +1,32 @@
+{% extends 'core/base_cms.html' %}
+{% load static from staticfiles %}
+{% load first_paragraph first_heading grouper from cms_tags %}
+
+{% block head_css %}
+  {{ block.super }}
+  <link href="{% static '/styles/industries-landing-page.css' %}" media="all" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+{% include 'directory_components/hero.html' with hero_text="Invest in UK industries" %}
+
+<section class="industries">
+  <div class="container">
+
+    <div class="grid-row">
+      <div class="column-third">
+        {% url 'industry' as industry_url %}
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Automot.fbd04514.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Automotive' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/North_E.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Capital investment'%}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Creativ.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Creative industries' %}
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

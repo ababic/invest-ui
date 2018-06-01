@@ -33,7 +33,7 @@
     }
 
     &:active {
-      @include focus;
+      @include link-focus;
     }
   }
 
@@ -69,7 +69,7 @@
       color: $light-grey;
 
       &:active {
-        @include focus;
+        @include link-focus;
       }
     }
   }

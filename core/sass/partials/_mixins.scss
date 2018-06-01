@@ -1,12 +1,16 @@
 
 @import '../partials/vars';
 
-@mixin focus {
+@mixin link-focus {
   outline: $focus-yellow solid 3px;
 
   &:active {
     color: $mid-blue;
   }
+}
+
+@mixin focus {
+  outline: $focus-yellow solid 3px;
 }
 
 @mixin active {
@@ -18,6 +22,6 @@
 }
 
 @mixin adaptive-focus($colour) {
-  @include focus;
+  @include link-focus;
   color: adaptive-color($colour);
 }

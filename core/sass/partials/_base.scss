@@ -1,13 +1,24 @@
 
 @import '../partials/mixins';
+@import '../partials/vars';
 
 body {
   margin: 0;
   padding: 0;
+  background-color: $great-blue;
+}
+
+section {
+  padding-bottom: 0;
+}
+
+#content {
+  padding: 0;
+  background-color: $white;
 }
 
 a:focus {
-  @include focus;
+  @include link-focus;
 }
 
 a:focus:active {
@@ -16,4 +27,8 @@ a:focus:active {
 
 a.labelled-card:focus:active {
   background-color: inherit;
+}
+
+#header-beta-bar {
+  background-color: $white;
 }

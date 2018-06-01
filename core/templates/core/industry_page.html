@@ -1,0 +1,106 @@
+{% extends 'core/base_cms.html' %}
+{% load static from staticfiles %}
+{% load first_paragraph first_heading grouper from cms_tags %}
+
+{% block head_css %}
+{{ block.super }}
+<link href="{% static '/styles/industry-page.css' %}" media="all" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+
+{% include 'directory_components/hero.html' with hero_text="Automotive: grow your business in the UK" background_image_url="https://invest-cms-prod.s3.amazonaws.com/images/Automotive.width-2400.png" %}
+
+<section class="industry-intro">
+  <div class="container">
+
+    <div class="grid-row">
+
+      <div class="column-two-thirds">
+        <ul class="list list-bullet font-medium">
+          <li>100 international markets buy from the UK automotive industry - totalling 40 billion GBP in exports in 2016</li>
+          <li>UK specialises in motorsports and car manufacturing</li>
+          <li>world-class research and development Catapult centres</li>
+        </ul>
+      </div>
+
+      <div class="column-third">
+        <div class="data">
+          <span class="data-item font-xxlarge">1st</span>
+          <span>in Europe for ease of doing business</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="industry-page-accordions section-underlined">
+  <div class="container">
+    <ul>
+
+      <li>
+        <a href="#" class="accordion-expander heading-medium link">UK automotive: at a glance</a>
+        <div class="accordion-content" aria-labelledby="accordion-content">
+          <div class="grid-row">
+            <div class="column-two-thirds">
+              <p>The UK automotive industry offers the highest value added per employee in car manufacturing of any European country, according to Eurostat.</p>
+              <p>We’re also Europe’s biggest market for plug-in cars (PEVS), with 47,263 registered in 2017.</p>
+              <p>Businesses looking to set up in the UK will find:</p>
+              <ul class="list list-bullet">
+                <li>competitive labour costs which are lower than Italy, France or Germany</li>
+                <li>the lowest corporation tax rate in the G20 - 19% falling to 17% by 2020</li>
+                <li>excellent labour relations</li>
+              </ul>
+              <p>The UK is improving internal combustion engines and developing electric vehicles. We’re Europe’s biggest manufacturer of electric cars, with a planned roll out of 10,000 electric charging points - helping to reduce carbon emissions.</p>
+              <p>The UK is also home to global brands for off-road vehicles, including Caterpillar, Leyland Trucks, Perkins and JCB.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <a href="#" class="accordion-expander heading-medium link">Locations</a>
+        <div class="accordion-content" aria-labelledby="accordion-content">
+          <div class="grid-row">
+            <div class="column-two-thirds">
+              <p>UK automotive manufacturing includes 7 volume car and engine makers and a strong supply chain.</p>
+              <p>The UK’s key strengths include:</p>
+              <ul class="list list-bullet">
+                <li>low-carbon technologies</li>
+                <li>autonomous and connected vehicle technologies</li>
+                <li>composites</li>
+                <li>motorsports</li>
+              </ul>
+              <p>The industry is particularly concentrated in The Midlands and North of England. Wales has a significant automotive cluster producing components.</p>
+              <p>South of England is home to much of the motorsports industry, including the headquarters of 60% of Formula One teams and two Formula One research and development (R&D) centres.</p>
+              <p>There are extensive R&D centres and testing facilities across the UK.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+</section>
+
+<section class="industry-page-related industry-list">
+  <div class="container">
+    <h2 class="heading-large">Related industries</h2>
+    <div class="grid-row">
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Automot.fbd04514.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Automotive' description='With over 17 billion GBP invested in the UK automotive industry between 2012 and 2017, the UK is one of the world’s most attractive destinations for foreign investment.' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/North_E.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Capital investment' description='The UK government is committed to supporting international investment into property development and infrastructure projects.' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Creativ.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Creative industries' description='From producing big budget movies to developing world-class computer games, creativity is thriving in the UK.' %}
+      </div>
+    </div>
+  </div>
+
+</section>
+{% endblock %}

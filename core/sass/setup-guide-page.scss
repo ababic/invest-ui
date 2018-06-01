@@ -1,0 +1,10 @@
+
+@import 'partials/default';
+@import 'partials/vars';
+@import 'partials/mixins';
+
+.setup-guide {
+  h2 {
+    margin: $spacing-1 0;
+  }
+}

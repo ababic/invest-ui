@@ -3,8 +3,8 @@
 {% load first_paragraph first_heading grouper from cms_tags %}
 
 {% block head_css %}
-{{ block.super }}
-<link href="{% static '/styles/landing-page.css' %}" media="all" rel="stylesheet" />
+  {{ block.super }}
+  <link href="{% static '/styles/landing-page.css' %}" media="all" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -46,34 +46,47 @@
   </div>
 </section>
 
-<section class="landing-page-industries section-underlined">
+<section class="landing-page-industries industry-list section-underlined">
   <div class="container">
     <h2 class="heading-large">Discover UK industries</h2>
 
     <div class="grid-row">
       <div class="column-third">
-        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Automot.fbd04514.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Automotive' description='With over 17 billion GBP invested in the UK automotive industry between 2012 and 2017, the UK is one of the world’s most attractive destinations for foreign investment.' %}
+        {% url 'industry' as industry_url %}
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Automot.fbd04514.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Automotive' description='With over 17 billion GBP invested in the UK automotive industry between 2012 and 2017, the UK is one of the world’s most attractive destinations for foreign investment.' %}
       </div>
       <div class="column-third">
-        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/North_E.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Capital investment' description='The UK government is committed to supporting international investment into property development and infrastructure projects.' %}
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/North_E.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Capital investment' description='The UK government is committed to supporting international investment into property development and infrastructure projects.' %}
       </div>
       <div class="column-third">
-        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Creativ.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Creative industries' description='From producing big budget movies to developing world-class computer games, creativity is thriving in the UK.' %}
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Creativ.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Creative industries' description='From producing big budget movies to developing world-class computer games, creativity is thriving in the UK.' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Financi.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Financial services' description='The UK offers the world’s leading business environment for financial services.' %}
+      </div>
+      <div class="column-third">
+        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Life_sc.d2229ba8.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Health and life sciences' description='The UK is the number one European destination for direct foreign investment in health and life sciences.' %}
       </div>
     </div>
 
-    <a href="#" class="button-ghost-blue">See more industries</a>
+    <a href="{% url 'industries' %}" class="button-ghost-blue">See more industries</a>
 
   </div>
 </section>
 
 <section class="landing-page-setup-guide section-underlined">
   <div class="container">
-    <h2 class="heading-large">Set up an overseas business in the UK</h2>
-    <p>Now is the time to invest in the UK. If you're ready to grow your business, here's how you can do it.</p>
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <h2 class="heading-large">Set up an overseas business in the UK</h2>
+        <p>Now is the time to invest in the UK. If you're ready to grow your business, here's how you can do it.</p>
+      </div>
+    </div>
+
     <div class="grid-row">
       <div class="column-third">
-        {% include 'directory_components/card.html' with url='#' title='Apply for a UK visa' description='Anyone from outside of the European Economic Area and Switzerland may need to apply for a UK visa to work in the UK or visit for business reasons.' %}
+        {% url 'guide-page' as guide_page_url %}
+        {% include 'directory_components/card.html' with url=guide_page_url title='Apply for a UK visa' description='Anyone from outside of the European Economic Area and Switzerland may need to apply for a UK visa to work in the UK or visit for business reasons.' %}
       </div>
       <div class="column-third">
         {% include 'directory_components/card.html' with url='#' title='Establish a base for business in the UK' description='The UK has a straightforward planning process, a wide range of properties, and incentives that help businesses to set up and expand.' %}
@@ -96,30 +109,27 @@
     </div>
 
     <div class="grid-row">
-      <div class="column-third">
+      <div class="column-third help-section">
         <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_31.2e16d0ba.fill-128x128.png" alt="">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-      <div class="column-third">
+      <div class="column-third help-section">
         <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_32.2e16d0ba.fill-128x128.png" alt="">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
       </div>
-      <div class="column-third">
+      <div class="column-third help-section">
         <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/Invest_Iconography_R01_Artboard_33.2e16d0ba.fill-128x128.png" alt="">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
       </div>
-    </div>
-
-    <div class="grid-row">
-      <div class="column-third">
+      <div class="column-third help-section">
         <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_34.2e16d0ba.fill-128x128.png" alt="">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-      <div class="column-third">
+      <div class="column-third help-section">
         <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_35.2e16d0ba.fill-128x128.png" alt="">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
       </div>
-      <div class="column-third">
+      <div class="column-third help-section">
         <div class="contact-button">
           <a href="#" class="button-ghost-white">Contact us</a>
         </div>

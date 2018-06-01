@@ -3,10 +3,6 @@
 @import 'partials/vars';
 @import 'partials/mixins';
 
-#content {
-  padding: 0;
-}
-
 .hero {
   padding: $spacing-1 + $spacing-3 0 $spacing-1;
 
@@ -19,6 +15,12 @@
     font-weight: 400;
   }
 
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+  }
+
   .hero-brand {
     position: absolute;
     right: 0;
@@ -29,29 +31,13 @@
     }
   }
 
-  .container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-  }
-
   .hero-text {
     width: 50%;
   }
 }
 
-section {
-  padding-bottom: 0;
-}
-
 .landing-page-accordions {
   padding-top: $spacing-1;
-}
-
-.landing-page-industries {
-  h2 {
-    margin-bottom: $spacing-2;
-  }
 }
 
 .landing-page-setup-guide {
@@ -80,6 +66,22 @@ section {
     margin-bottom: $spacing-4;
   }
 
+  .help-section {
+    min-height: 250px;
+  }
+
+}
+
+@media (min-width: 640px) {
+  .column-third {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .column-third {
+    width: calc(100%/3);
+  }
 }
 
 @media (max-width: 900px) {
@@ -91,6 +93,41 @@ section {
 }
 
 @media (max-width: 640px) {
+  .labelled-card img {
+    max-height: 150px;
+    object-fit: cover;
+  }
+
+  .landing-page-how-we-help .help-section {
+    min-height: auto;
+    clear: both;
+    padding-bottom: $spacing-4;
+
+    &:last-child {
+      padding-top: $spacing-3;
+
+      p {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .contact-button {
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    p,
+    .icon {
+      float: left;
+    }
+
+    p {
+      width: calc(100% - 64px - 30px);
+      margin-left: $spacing-3;
+    }
+  }
+
   .hero {
     .hero-text {
       width: 100%;

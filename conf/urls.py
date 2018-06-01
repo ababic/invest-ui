@@ -28,6 +28,26 @@ urlpatterns = [
         core.views.LandingPageCMSView.as_view(),
         name="index"
     ),
+    url(
+        r"^industries/$",
+        core.views.IndustriesLandingPageCMSView.as_view(),
+        name="industries"
+    ),
+    url(
+        r"^industry/$",
+        core.views.IndustryPageCMSView.as_view(),
+        name="industry"
+    ),
+    url(
+        r"^uk-setup-guide/$",
+        core.views.SetupGuideLandingPageCMSView.as_view(),
+        name="setup-guide"
+    ),
+    url(
+        r"^guide-page/$",
+        core.views.SetupGuidePageCMSView.as_view(),
+        name="guide-page"
+    ),
 ]
 
 

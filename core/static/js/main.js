@@ -15,7 +15,8 @@ dit.home = (new function () {
     });
 
     enhanceLanguageSelector();
-    setupDesktopExpanders();
+    setupAccordionExpanders();
+    headerMenuExpander();
     delete this.init; // Run once
   }
 
@@ -56,12 +57,11 @@ dit.home = (new function () {
 
   /* Add expanding functionality to target elements for desktop.
   **/
-  var _expanders = [];
-  function setupDesktopExpanders() {
+  var accordions = [];
+  function setupAccordionExpanders() {
     $('.accordion-content').each(function() {
       var $this = $(this);
-      // Add to _expanders support reset()
-      _expanders.push(new dit.classes.Expander($this, {
+      accordions.push(new dit.classes.Expander($this, {
         hover: false,
         blur: false,
         wrap: false,
@@ -69,6 +69,18 @@ dit.home = (new function () {
       }));
     });
   }
+
+  // Set up header menu expander
+  function headerMenuExpander() {
+    var $this = $('.header-links-list');
+    new dit.classes.Expander($this, {
+      hover: false,
+      blur: true,
+      wrap: false,
+      $control: $('.header-menu-activator')
+    });
+  }
+
 
 });
 

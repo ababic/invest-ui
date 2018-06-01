@@ -53,13 +53,100 @@ class LandingPageCMSView(
         return helpers.handle_cms_response(response)
 
 
-class RedirectToCMSIndustryView(RedirectView):
-    query_string = True
+class IndustriesLandingPageCMSView(
+    mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
+    CMSFeatureFlagMixin, TemplateView
+):
+    active_view_name = 'index'
+    template_name = 'core/industries_landing_page.html'
 
-    def get_redirect_url(self, *args, **kwargs):
-        return reverse(
-            'sector-detail-verbose', kwargs={'slug': self.kwargs['slug']}
+    def get_context_data(self, *args, **kwargs):
+        return super().get_context_data(
+            page=self.get_cms_page(),
+            search_form=forms.SearchForm(),
+            *args,
+            **kwargs
         )
+
+    def get_cms_page(self):
+        response = helpers.cms_client.lookup_by_slug(
+            slug=cms_constants.FIND_A_SUPPLIER_LANDING_SLUG,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
+        )
+        return helpers.handle_cms_response(response)
+
+
+class IndustryPageCMSView(
+    mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
+    CMSFeatureFlagMixin, TemplateView
+):
+    active_view_name = 'index'
+    template_name = 'core/industry_page.html'
+
+    def get_context_data(self, *args, **kwargs):
+        return super().get_context_data(
+            page=self.get_cms_page(),
+            search_form=forms.SearchForm(),
+            *args,
+            **kwargs
+        )
+
+    def get_cms_page(self):
+        response = helpers.cms_client.lookup_by_slug(
+            slug=cms_constants.FIND_A_SUPPLIER_LANDING_SLUG,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
+        )
+        return helpers.handle_cms_response(response)
+
+
+class SetupGuideLandingPageCMSView(
+    mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
+    CMSFeatureFlagMixin, TemplateView
+):
+    active_view_name = 'index'
+    template_name = 'core/setup_guide_landing_page.html'
+
+    def get_context_data(self, *args, **kwargs):
+        return super().get_context_data(
+            page=self.get_cms_page(),
+            search_form=forms.SearchForm(),
+            *args,
+            **kwargs
+        )
+
+    def get_cms_page(self):
+        response = helpers.cms_client.lookup_by_slug(
+            slug=cms_constants.FIND_A_SUPPLIER_LANDING_SLUG,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
+        )
+        return helpers.handle_cms_response(response)
+
+
+class SetupGuidePageCMSView(
+    mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
+    CMSFeatureFlagMixin, TemplateView
+):
+    active_view_name = 'index'
+    template_name = 'core/setup_guide_page.html'
+
+    def get_context_data(self, *args, **kwargs):
+        return super().get_context_data(
+            page=self.get_cms_page(),
+            search_form=forms.SearchForm(),
+            *args,
+            **kwargs
+        )
+
+    def get_cms_page(self):
+        response = helpers.cms_client.lookup_by_slug(
+            slug=cms_constants.FIND_A_SUPPLIER_LANDING_SLUG,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
+        )
+        return helpers.handle_cms_response(response)
 
 
 class LeadGenerationFormView(

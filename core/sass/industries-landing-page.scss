@@ -1,0 +1,21 @@
+
+@import 'partials/default';
+@import 'partials/vars';
+@import 'partials/mixins';
+
+.hero {
+  padding-top: 0;
+  background-image: url(https://invest-cms-prod.s3.amazonaws.com/images/Life_sciences.width-2400.width-2400.png);
+}
+
+.industries {
+  padding-top: $spacing-1;
+}
+
+a.labelled-card {
+  min-height: auto;
+
+  .card-inner {
+    display: none;
+  }
+}
