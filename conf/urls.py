@@ -34,7 +34,7 @@ urlpatterns = [
         name="industries"
     ),
     url(
-        r"^industry/$",
+        r"^industries/(?P<slug>.+)/$",
         core.views.IndustryPageCMSView.as_view(),
         name="industry"
     ),

@@ -9,15 +9,15 @@
 
 {% block content %}
 
-{% include 'directory_components/hero.html' with hero_text="UK setup guide" %}
+{% include 'directory_components/hero.html' with hero_text=page.heading %}
 
-<section class="setup-guide section-underlined">
+<section class="setup-guide">
   <div class="container">
     <div class="intro">
       <div class="grid-row">
         <div class="column-two-thirds">
-          <h2 class="heading-large">Your guide to setting up an overseas business in the UK</h2>
-          <p>The time to invest in the UK is now. If you’re ready to take the next step for your business, here’s how to do it</p>
+          <h2 class="heading-large">{{ page.sub_heading }}</h2>
+          <p>{{ page.lead_in }}</p>
         </div>
       </div>
     </div>

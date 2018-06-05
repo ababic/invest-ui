@@ -212,14 +212,14 @@
   Modal.prototype = {};
   Modal.prototype.close = function() {
     var self = this;
-    self.$container.hide(50, function () {
+    self.$container.fadeOut(50, function () {
       self.$container.attr(ARIA_EXPANDED, false);
       self.$container.removeClass(CSS_CLASS_OPEN);
       self.onClose();
     });
 
     if (self.$overlay && self.$overlay.length) {
-      self.$overlay.hide(150);
+      self.$overlay.fadeOut(150);
     }
 
   }
@@ -236,13 +236,13 @@
 
     self.$container.css("top", top + "px");
     self.$container.addClass(CSS_CLASS_OPEN);
-    self.$container.show(250, function () {
+    self.$container.fadeIn(250, function () {
       self.$container.attr(ARIA_EXPANDED, true);
     });
 
     if (self.$overlay && self.$overlay.length) {
       Modal.setOverlayHeight(self.$overlay);
-      self.$overlay.show(0);
+      self.$overlay.fadeIn(0);
     }
   }
 

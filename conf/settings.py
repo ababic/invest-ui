@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "directory_components",
     "export_elements",
+    'crispy_forms',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -116,10 +117,9 @@ LANGUAGES = [
     ('zh-hans', '简体中文'),             # Simplified Chinese
     ('fr', 'Français'),                 # French
     ('es', 'español'),                  # Spanish
-    ('pt', 'Português'),                # Portuguese
     ('pt-br', 'Português Brasileiro'),  # Portuguese (Brazilian)
     ('ar', 'العربيّة'),                 # Arabic
-    ('ru', 'Русский'),                  # Russian
+    # ('ru', 'Русский'),                  # Russian
 ]
 
 LOCALE_PATHS = (
@@ -267,6 +267,31 @@ ZENDESK_TOKEN = os.environ['ZENDESK_TOKEN']
 ZENDESK_EMAIL = os.environ['ZENDESK_EMAIL']
 ZENDESK_TICKET_SUBJECT = os.getenv(
     'ZENDESK_TICKET_SUBJECT', 'Trade Profiles feedback')
+
+# Google Recaptcha
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
+NOCAPTCHA = os.getenv('NOCAPTCHA') != 'false'
+
+# Email
+IIGB_AGENT_EMAIL = os.getenv('IIGB_AGENT_EMAIL')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_FROM')
+EMAIL_BACKED_CLASSES = {
+    'default': 'django.core.mail.backends.smtp.EmailBackend',
+    'console': 'django.core.mail.backends.console.EmailBackend'
+}
+EMAIL_BACKEND_CLASS_NAME = os.getenv('EMAIL_BACKEND_CLASS_NAME', 'default')
+EMAIL_BACKEND = EMAIL_BACKED_CLASSES[EMAIL_BACKEND_CLASS_NAME]
+EMAIL_HOST = os.getenv('SMTP_HOST')
+EMAIL_PORT = os.getenv('SMTP_PORT', 587)
+EMAIL_HOST_USER = os.getenv('SMTP_USERNAME')
+EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')
+EMAIL_USE_TLS = True
+
+PREFIX_DEFAULT_LANGUAGE = False
+IPSTACK_API_KEY = os.getenv('IPSTACK_API_KEY', '')
+
+LANGUAGE_COOKIE_NAME = 'django-language'
 
 # Sorl-thumbnail
 THUMBNAIL_FORMAT = 'PNG'

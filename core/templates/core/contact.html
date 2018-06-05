@@ -1,4 +1,5 @@
 {% extends 'core/base_cms.html' %}
+{% load crispy_forms_tags %}
 {% load static from staticfiles %}
 {% load first_paragraph first_heading grouper from cms_tags %}
 
@@ -12,16 +13,11 @@
 
 {% include 'directory_components/hero.html' with hero_text="Contact us" %}
 
-<section class="setup-guide">
+<section class="contact">
   <div class="container">
-    <h2 class="heading-medium">Contact information</h2>
     <form autocomplete="off">
       {% csrf_token %}
-      {{ contact_form.as_p }}
-      <div class="form-group">
-        <p class="form-label">By sending us your details you can confirm that the information you've shared with us is true and you accept our terms and conditions.</p>
-      </div>
-      <input class="button" type="submit" value="Submit" />
+      {% crispy contact_form %}
     </form>
   </div>
 </section>
@@ -32,7 +28,7 @@
 <script src="{% static 'js/vendor/accessible-autocomplete.min.js' %}"></script>
   <script>
       accessibleAutocomplete.enhanceSelectElement({
-        selectElement: document.getElementById('js-sector-select'),
+        selectElement: document.getElementById('js-country-select'),
         defaultValue: '',
         autoselect: false,
         showAllValues: false,

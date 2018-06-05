@@ -9,6 +9,7 @@
     @include red-underline
     content: '';
     padding-bottom: $spacing-1 + $spacing-3;
+    margin: 0 -15px;
     display: block;
   }
 }

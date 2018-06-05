@@ -9,7 +9,7 @@
 
 {% block content %}
 
-{% include 'directory_components/hero.html' with hero_text="Invest in UK industries" %}
+{% include 'directory_components/hero.html' with hero_text=page.heading background_image_url=page.hero_image.url %}
 
 <section class="industries">
   <div class="container">

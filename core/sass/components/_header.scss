@@ -3,7 +3,6 @@
 #invest-header {
   background-color: $great-blue;
   font-family: $brand-font;
-  padding-top: 10px;
 
   a {
     color: $white;
@@ -18,7 +17,7 @@
   .header-links-list {
     float: right;
     background-color: $great-blue;
-    margin-top: -54px;
+    margin-top: -53px;
 
     li {
       display: block;
@@ -33,17 +32,26 @@
         position: relative;
       }
 
+      a.active {
+
+        &:after {
+          @include red-trim;
+          bottom: 0;
+          left: 0;
+        }
+
+        &:hover:after {
+          display: none;
+        }
+      }
+
       a:hover {
         background-color: $mid-blue;
 
         &:before {
-          background-color: #e41f13;
-          content: "";
-          height: 4px;
+          @include red-trim;
           left: 0;
           top: 0;
-          width: 100%;
-          position: absolute;
         }
       }
     }

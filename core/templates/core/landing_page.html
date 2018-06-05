@@ -1,6 +1,7 @@
 {% extends 'core/base_cms.html' %}
 {% load static from staticfiles %}
 {% load first_paragraph first_heading grouper from cms_tags %}
+{% load add_export_elements_classes from cms_tags %}
 
 {% block head_css %}
   {{ block.super }}
@@ -9,38 +10,22 @@
 
 {% block content %}
 
-{% include 'core/hero_landing_page.html' %}
+{% include 'core/hero_landing_page.html' with heading=page.heading sub_heading=page.sub_heading img_url=page.hero_image.url %}
 
 <section class="landing-page-accordions section-underlined">
   <div class="container">
     <div class="grid-row">
       <div class="column-two-thirds">
         <ul>
-
+          {% for section in page.subsections %}
           <li>
-            <a href="#" class="accordion-expander heading-medium link">Bring your business to the UK</a>
+            <a href="#" class="accordion-expander heading-medium link">{{ section.title }}</a>
             <div class="accordion-content" aria-labelledby="accordion-content">
-              <p>The UK has 65 million potential consumers and is the fifth largest economy in the world. It also:</p>
-              <ul class="list list-bullet">
-                <li>attracts more foreign investment than any other European country</li>
-                <li>is the easiest European country to do business with, according to the World Bank</li>
-              </ul>
+              {{ section.content|add_export_elements_classes|safe }}
             </div>
           </li>
-          <li>
-            <a href="#" class="accordion-expander heading-medium link">Access a highly skilled workforce</a>
-            <div class="accordion-content" aria-labelledby="accordion-content">
-              <p>Hiring in the UK gives you access to:</p>
-              <ul class="list list-bullet">
-                <li>an innovative workforce - the UK is ranked 2nd in the G20 Global Innovation Index</li>
-                <li>graduates from 4 of the world’s top 10 universities</li>
-                <li>the largest proportion of people educated to degree level or equivalent in western Europe</li>
-              </ul>
-            </div>
-          </li>
-
+          {% endfor %}
         </ul>
-
       </div>
     </div>
   </div>
@@ -48,7 +33,7 @@
 
 <section class="landing-page-industries industry-list section-underlined">
   <div class="container">
-    <h2 class="heading-large">Discover UK industries</h2>
+    <h2 class="heading-large">{{ page.sector_title }}</h2>
 
     <div class="grid-row">
       <div class="column-third">
@@ -69,7 +54,7 @@
       </div>
     </div>
 
-    <a href="{% url 'industries' %}" class="button-ghost-blue">See more industries</a>
+    <a href="{% url 'industries' %}" class="button-ghost-blue">{{ page.sector_button_text }}</a>
 
   </div>
 </section>
@@ -80,8 +65,8 @@
     <div class="intro">
       <div class="grid-row">
         <div class="column-two-thirds">
-          <h2 class="heading-large">Set up an overseas business in the UK</h2>
-          <p>Now is the time to invest in the UK. If you're ready to grow your business, here's how you can do it.</p>
+          <h2 class="heading-large">{{ page.setup_guide_title }}</h2>
+          <p>{{ page.setup_guide_lead_in }}</p>
         </div>
       </div>
     </div>
@@ -104,40 +89,24 @@
 <section class="landing-page-how-we-help section-underlined">
   <div class="container">
 
-    <h2 class="heading-large">How we help</h2>
+    <h2 class="heading-large">{{ page.how_we_help_title }}</h2>
     <div class="grid-row">
       <div class="column-two-thirds">
-        <p>The Department for International Trade helps foreign companies to establish and grow in the UK. Our investor service teams are located in UK embassies, high commissions and consulates in cities around the world. They offer you:</p>
+        <p>{{ page.how_we_help_lead_in }}</p>
       </div>
     </div>
 
     <div class="grid-row">
-      <div class="column-third help-section">
-        <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_31.2e16d0ba.fill-128x128.png" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-      <div class="column-third help-section">
-        <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_32.2e16d0ba.fill-128x128.png" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-      </div>
-      <div class="column-third help-section">
-        <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/Invest_Iconography_R01_Artboard_33.2e16d0ba.fill-128x128.png" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-      </div>
-      <div class="column-third help-section">
-        <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_34.2e16d0ba.fill-128x128.png" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-      <div class="column-third help-section">
-        <img class="icon" src="https://invest-cms-prod.s3.amazonaws.com/images/icon_35.2e16d0ba.fill-128x128.png" alt="">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-      </div>
-      <div class="column-third help-section">
-        <div class="contact-button">
-          <a href="#" class="button-ghost-white">Contact us</a>
-        </div>
-        <p>Thinking of moving your business to the UK? Contact us for help and advice about getting set up.</p>
-      </div>
+      <ul>
+        {% for section in page.how_we_help %}
+        <li>
+          <div class="column-third help-section">
+            <img class="icon" src="{{ section.icon }}" alt="">
+            <p>{{ section.text }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
 
   </div>

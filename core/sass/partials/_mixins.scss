@@ -20,3 +20,11 @@
 @mixin red-underline {
   border-bottom: 2px solid $great-red;
 }
+
+@mixin red-trim {
+  background-color: $great-red;
+  content: "";
+  height: 4px;
+  width: 100%;
+  position: absolute;
+}

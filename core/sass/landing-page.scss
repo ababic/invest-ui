@@ -9,6 +9,7 @@
   h1 {
     margin-top: 0;
     font-family: $hero-brand-font;
+    text-transform: uppercase;
   }
 
   h2 {
@@ -93,6 +94,12 @@
     .hero-text {
       width: 75%;
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .landing-page-accordions .column-two-thirds {
+    width: 100%;
   }
 }
 
