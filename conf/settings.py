@@ -52,9 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'core.middleware.MaintenanceModeMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'core.middleware.LocaleQuerystringMiddleware',
-    'core.middleware.PersistLocaleMiddleware',
-    'core.middleware.ForceDefaultLocale',
+    'django.middleware.locale.LocaleMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,9 +71,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'core.context_processors.feature_flags',
+                'core.context_processors.untranslated_url',
                 'directory_components.context_processors.analytics',
                 'directory_components.context_processors.urls_processor',
-
             ],
         },
     },

@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls import url, include
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 from django.views.static import serve
@@ -23,6 +24,10 @@ urlpatterns = [
         ),
         name='robots'
     ),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+]
+
+urlpatterns += i18n_patterns(
     url(
         r"^$",
         core.views.LandingPageCMSView.as_view(),
@@ -63,7 +68,8 @@ urlpatterns = [
         core.views.PrivacyAndCookiesView.as_view(),
         name="privacy-and-cookies"
     ),
-]
+    prefix_default_language=False,
+)
 
 
 if settings.THUMBNAIL_STORAGE_CLASS_NAME == 'local-storage':

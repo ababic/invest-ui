@@ -24,7 +24,7 @@
       <button class="header-menu-activator" aria-expanded="false" aria-label="Toggle navigation">Menu<span></span></button>
       <nav class="header-links-list">
         <ul>
-          <li><a href="/"{% if is_landing_page %} class="active"{% endif %}>Home</a></li>
+          <li><a href="{% url 'index' %}"{% if is_landing_page %} class="active"{% endif %}>Home</a></li>
           <li><a href="{% url 'industries' %}"{% if is_industry_page %} class="active"{% endif %}>Industries</a></li>
           <li><a href="{% url 'setup-guide' %}"{% if is_setup_guide_page %} class="active"{% endif %}>UK setup guide</a></li>
           <li><a href="{% url 'contact' %}"{% if is_contact_page %} class="active"{% endif %}>Contact us</a></li>
