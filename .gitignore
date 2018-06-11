@@ -5,6 +5,7 @@ __pycache__/
 .sass-cache/
 .venv/
 conf/staticfiles/
+enrolment/staticfiles/
 BrowserStackLocal
 node_modules/
 
