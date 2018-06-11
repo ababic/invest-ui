@@ -83,11 +83,11 @@
   }
 
   Modal.findFirstFocusElement = function($container) {
-    return $container.find("video, a, button, input, select").eq(0);
+    return $container.find("video, a, button, input[type=submit], select").eq(0);
   }
 
   Modal.findLastFocusElement = function($container) {
-    return $container.find("video, a, button, input, select").last();
+    return $container.find("video, a, button, input[type=submit], select").last();
   }
 
   Modal.enhanceModalContainer = function($container) {

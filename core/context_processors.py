@@ -1,5 +1,5 @@
 from django.conf import settings
-from core.helpers import get_language_from_prefix
+from core.helpers import get_untranslated_url
 
 
 def feature_flags(request):
@@ -20,11 +20,7 @@ def analytics(request):
 
 
 def untranslated_url(request):
-    current_language = get_language_from_prefix(request)
-    if current_language == 'en-gb':
-        untranslated_url = request.path
-    else:
-        untranslated_url = request.path.replace('/' + current_language, '')
+    untranslated_url = get_untranslated_url(request)
     return {
         'untranslated_url': untranslated_url
     }

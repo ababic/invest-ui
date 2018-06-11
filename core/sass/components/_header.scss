@@ -3,6 +3,8 @@
 #invest-header {
   background-color: $great-blue;
   font-family: $brand-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   a {
     color: $white;
@@ -82,10 +84,15 @@
     display: none;
   }
 
+  .not-translated {
+    color: $white;
+  }
+
   .language-toggle {
     float: right;
     font-size: 15px;
     font-weight: 700;
+    padding-top: 10px;
 
     a {
       background-image: url("https://invest-cms-prod.s3.amazonaws.com/images/globe-icon.original.width-40.png");
@@ -197,6 +204,10 @@
 
           &:hover:before {
             background-color: $mid-blue;
+          }
+
+          &.active:after {
+            display: none;
           }
         }
       }

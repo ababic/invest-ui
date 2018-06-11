@@ -39,3 +39,18 @@ def slash_split(string):
         return string.split("/")[0]
     else:
         return "".join(string.split("/", 2)[:2])
+
+
+def get_untranslated_url(request):
+    current_language = get_language_from_prefix(request)
+    if current_language == 'en-gb':
+        untranslated_url = request.path
+    else:
+        untranslated_url = request.path.replace('/' + current_language, '')
+    return untranslated_url
+
+
+def is_language_available(language_code, available_languages):
+    language_choices = available_languages
+    language_codes = [code for code, lang in language_choices]
+    return language_code in language_codes

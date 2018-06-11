@@ -5,12 +5,19 @@
 <section role="dialog" data-component="language-selector-dialog" data-lang="{{ LANGUAGE_CODE }}" class="language-selector-dialog">
   <div data-node="languages" class="languages">
     <h2 class="font-large">{% trans "Select language" %}</h2>
-    <ul aria-labelledby="language-selector" class="font-medium navigation">
-      {% for code, label in LANGUAGES %}
-      <li class="bidi-rtl">
-        <a class="link" href="#">{{ label }}</a>
-      </li>
+    <ul>
+      {% for code, language in language_switcher.available_languages %}
+        <li>
+          <form class="languages" action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ untranslated_url }}" />
+            <input name="language" type="hidden" value="{{ code }}" />
+            <input class="link" type="submit" value="{{ language }}" />
+          </form>
+        </li>
       {% endfor %}
     </ul>
+
+
   </div>
 </section>

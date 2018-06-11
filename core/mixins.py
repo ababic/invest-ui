@@ -1,14 +1,20 @@
-from django.conf import settings
 from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.cache import set_response_etag
+from django.conf import settings
 
-from core import forms, helpers
+from core import helpers
 
 
 class IncorrectSlug(Exception):
     def __init__(self, canonical_url, *args, **kwargs):
         self.canonical_url = canonical_url
+        super().__init__(*args, **kwargs)
+
+
+class LanguageUnavailable(Exception):
+    def __init__(self, unavailable_language, *args, **kwargs):
+        self.unavailable_language = unavailable_language
         super().__init__(*args, **kwargs)
 
 
@@ -20,40 +26,22 @@ class SetEtagMixin:
         return response
 
 
-class EnableTranslationsMixin:
-    template_name_bidi = None
-    language_form_class = forms.LanguageForm
-
-    def __init__(self, *args, **kwargs):
-        dependency = 'core.middleware.ForceDefaultLocale'
-        assert dependency in settings.MIDDLEWARE_CLASSES
-        super().__init__(*args, **kwargs)
-
-    def dispatch(self, request, *args, **kwargs):
-        translation.activate(request.LANGUAGE_CODE)
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['LANGUAGE_BIDI'] = translation.get_language_bidi()
-        language_form_kwargs = self.get_language_form_kwargs()
-        context['language_switcher'] = {
-            'show': True,
-            'form': self.language_form_class(**language_form_kwargs),
-        }
-        return context
-
-    def get_language_form_kwargs(self, **kwargs):
-        return {
-            'initial': forms.get_language_form_initial_data(),
-            **kwargs,
-        }
-
-
 class ActiveViewNameMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['active_view_name'] = self.active_view_name
+        return context
+
+
+class ChildPageLocalSlugs:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for page_group_name in self.subpage_groups:
+            pages = context['page'][page_group_name]
+            for page in pages:
+                page['meta']['slug'] = page['meta']['slug'][7:]
+            localised_subpages = 'localised_{}'.format(page_group_name)
+            context[localised_subpages] = pages
         return context
 
 
@@ -69,6 +57,9 @@ class GetCMSPageMixin:
 
     def handle_cms_response(self, response):
         page = helpers.handle_cms_response(response)
+        requested_language = translation.get_language()
+        if requested_language not in dict(page['meta']['languages']):
+            raise LanguageUnavailable(requested_language)
         if page['meta']['slug'] != self.kwargs['slug']:
             raise IncorrectSlug(page['meta']['url'])
         return page
@@ -78,21 +69,47 @@ class GetCMSPageMixin:
             return super().dispatch(*args, **kwargs)
         except IncorrectSlug as exception:
             return redirect(exception.canonical_url)
+        except LanguageUnavailable as exception:
+            untranslated_url = helpers.get_untranslated_url(self.request)
+            return redirect(untranslated_url)
+
+
+class GetCMSPageLanguageRedirect(GetCMSPageMixin):
+    def get_cms_page(self):
+        if hasattr(self, 'slug'):
+            slug = self.slug
+        else:
+            slug = 'invest-' + self.kwargs['slug']
+        response = helpers.cms_client.lookup_by_slug(
+            slug=slug,
+            language_code=translation.get_language(),
+            draft_token=self.request.GET.get('draft_token'),
+        )
+        return self.handle_cms_response(response)
+
+    def handle_cms_response(self, response):
+        page = helpers.handle_cms_response(response)
+        requested_language = translation.get_language()
+        if requested_language not in dict(page['meta']['languages']):
+            raise LanguageUnavailable(requested_language)
+        return page
 
 
 class CMSLanguageSwitcherMixin:
     def get_context_data(self, page, *args, **kwargs):
-        form = forms.LanguageForm(
-            initial={'lang': translation.get_language()},
-            language_choices=page['meta']['languages']
-        )
         show_language_switcher = (
             len(page['meta']['languages']) > 1 and
-            form.is_language_available(translation.get_language())
-        )
+            'en-gb' in page['meta']['languages'][0]
+            )
+        language_available = translation.get_language() \
+            in page['meta']['languages']
         return super().get_context_data(
             page=page,
-            language_switcher={'form': form, 'show': show_language_switcher},
+            language_switcher={
+                'show': show_language_switcher,
+                'available_languages': page['meta']['languages'],
+                'language_available': language_available
+            },
             *args,
             **kwargs
         )

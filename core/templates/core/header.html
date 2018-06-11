@@ -12,9 +12,15 @@
         <img tabindex="-1" src="https://iigb-invest-staging.s3.amazonaws.com/images/UK-Gov_STACK_WHITE_AW.width-352.png" srcset="https://iigb-invest-staging.s3.amazonaws.com/images/UK-Gov_STACK_WHITE_AW.width-352.png 2x" alt="" />
       </a>
       <div class="language-toggle" id="language-selector-activator">
-        <a href="" aria-label="Show language selector" class="LanguageSelectorDialog-Tracker">
-          <span class="lang">{{ lang_code }}</span>
-        </a>
+        {% if language_switcher.show %}
+          <a href="" aria-label="Show language selector" class="LanguageSelectorDialog-Tracker">
+            <span class="lang">{{ lang_code }}</span>
+          </a>
+        {% else %}
+        <div class="not-translated">
+          <span>{% trans 'Page in English only' %}</span>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -24,10 +30,10 @@
       <button class="header-menu-activator" aria-expanded="false" aria-label="Toggle navigation">Menu<span></span></button>
       <nav class="header-links-list">
         <ul>
-          <li><a href="{% url 'index' %}"{% if is_landing_page %} class="active"{% endif %}>Home</a></li>
-          <li><a href="{% url 'industries' %}"{% if is_industry_page %} class="active"{% endif %}>Industries</a></li>
-          <li><a href="{% url 'setup-guide' %}"{% if is_setup_guide_page %} class="active"{% endif %}>UK setup guide</a></li>
-          <li><a href="{% url 'contact' %}"{% if is_contact_page %} class="active"{% endif %}>Contact us</a></li>
+          <li><a href="{% url 'index' %}"{% if active_view_name == 'index' %} class="active"{% endif %}>Home</a></li>
+          <li><a href="{% url 'industries' %}"{% if active_view_name == 'industries' %} class="active"{% endif %}>Industries</a></li>
+          <li><a href="{% url 'setup-guide' %}"{% if active_view_name == 'setup-guide' %} class="active"{% endif %}>UK setup guide</a></li>
+          <li><a href="{% url 'contact' %}"{% if active_view_name == 'contact' %} class="active"{% endif %}>Contact us</a></li>
         </ul>
       </nav>
     </div>

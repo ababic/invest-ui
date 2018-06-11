@@ -87,25 +87,18 @@
   color: $black;
   padding: $spacing-3;
 
-  li {
-    display: inline;
-    float: none;
+  input[type=submit] {
+    background:none;
+    border:none;
+    padding:0;
+    font: inherit;
+    cursor: pointer;
+    font-size: 20px;
   }
 
-  .font-large {
-    margin-bottom: 1em;
-  }
-
-  .languages {
-    padding-bottom: $spacing-4;
-  }
-}
-
-
-.language-selector-dialog {
-  top: 0;
-  a {
-    text-decoration: underline;
+  ul {
+    display: block;
+    padding-left: 0;
   }
 
   li {
@@ -119,46 +112,14 @@
     margin-bottom: $spacing-3;
   }
 
+  .font-large {
+    margin-bottom: 1em;
+  }
+
   #languages-selector {
     @include heading-m;
     font-weight: normal;
   }
-
-  ul {
-    display: block;
-    padding-left: 0;
-  }
-
-  .languages {
-    overflow: hidden;
-    padding: 0;
-  }
-
-  .domestic-redirect {
-    float: right;
-    padding-left: $spacing-3;
-    padding-top: 71px;
-    width: $cols-4;
-
-    p {
-      font-size: inherit;
-      font-weight: normal;
-    }
-
-    span {
-      @include body-s;
-      display: block;
-      max-width: 215px;
-      padding-top: $spacing-4;
-    }
-  }
-}
-
-.language-toggle {
-  position: absolute;
-  right: 30px;
-  top: 10px;
-  height: auto;
 }
 
 nav.navbar .LanguageSelectorDialog-Tracker {
@@ -175,11 +136,6 @@ nav.navbar .LanguageSelectorDialog-Tracker {
   &:hover {
     color: $white;
     text-decoration: underline;
-  }
-
-  .label {
-    font-weight: bold;
-    text-transform: capitalize;
   }
 
   .lang {
@@ -214,6 +170,15 @@ nav.navbar .LanguageSelectorDialog-Tracker {
   }
 }
 
+
+// MOBILE
+@media screen and (max-width: 640px) {
+  .language-selector-dialog {
+    input[type=submit] {
+      font-size: 18px;
+    }
+  }
+}
 
 // MOBILE
 @media screen and (max-width: 580px) {
