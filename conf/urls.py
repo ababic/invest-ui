@@ -39,7 +39,12 @@ urlpatterns += i18n_patterns(
         name="industries"
     ),
     url(
-        r"^industries/(?P<slug>.+)/$",
+        r"^industries/(?P<parent_slug>[\w-]+)/(?P<slug>[\w-]+)/$",
+        core.views.IndustryPageCMSView.as_view(),
+        name="industry"
+    ),
+    url(
+        r"^industries/(?P<slug>[\w-]+)/$",
         core.views.IndustryPageCMSView.as_view(),
         name="industry"
     ),
@@ -49,7 +54,7 @@ urlpatterns += i18n_patterns(
         name="setup-guide"
     ),
     url(
-        r"^guide-page/$",
+        r"^uk-setup-guide/(?P<slug>[\w-]+)/$",
         core.views.SetupGuidePageCMSView.as_view(),
         name="guide-page"
     ),
@@ -59,14 +64,9 @@ urlpatterns += i18n_patterns(
         name="contact"
     ),
     url(
-        r"^terms-and-conditions/$",
-        core.views.TermsAndConditionsView.as_view(),
-        name="terms-and-conditions"
-    ),
-    url(
-        r"^privacy-and-cookies/$",
-        core.views.PrivacyAndCookiesView.as_view(),
-        name="privacy-and-cookies"
+        r"^(?P<slug>[\w-]+)/$",
+        core.views.PlainCMSPageView.as_view(),
+        name="cms-page"
     ),
     prefix_default_language=False,
 )
