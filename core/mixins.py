@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.cache import set_response_etag
-from django.conf import settings
+from django.http import Http404
 
 from core import helpers
 
@@ -9,12 +9,6 @@ from core import helpers
 class IncorrectSlug(Exception):
     def __init__(self, canonical_url, *args, **kwargs):
         self.canonical_url = canonical_url
-        super().__init__(*args, **kwargs)
-
-
-class LanguageUnavailable(Exception):
-    def __init__(self, unavailable_language, *args, **kwargs):
-        self.unavailable_language = unavailable_language
         super().__init__(*args, **kwargs)
 
 
@@ -59,7 +53,7 @@ class GetCMSPageMixin:
         page = helpers.handle_cms_response(response)
         requested_language = translation.get_language()
         if requested_language not in dict(page['meta']['languages']):
-            raise LanguageUnavailable(requested_language)
+            raise Http404
         if page['meta']['slug'] != self.kwargs['slug']:
             raise IncorrectSlug(page['meta']['url'])
         return page
@@ -69,9 +63,6 @@ class GetCMSPageMixin:
             return super().dispatch(*args, **kwargs)
         except IncorrectSlug as exception:
             return redirect(exception.canonical_url)
-        except LanguageUnavailable as exception:
-            untranslated_url = helpers.get_untranslated_url(self.request)
-            return redirect(untranslated_url)
 
 
 class GetCMSPageLanguageRedirect(GetCMSPageMixin):
@@ -91,7 +82,7 @@ class GetCMSPageLanguageRedirect(GetCMSPageMixin):
         page = helpers.handle_cms_response(response)
         requested_language = translation.get_language()
         if requested_language not in dict(page['meta']['languages']):
-            raise LanguageUnavailable(requested_language)
+            raise Http404
         return page
 
 

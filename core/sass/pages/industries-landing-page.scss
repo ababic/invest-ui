@@ -1,7 +1,8 @@
 
-@import 'partials/default';
-@import 'partials/vars';
-@import 'partials/mixins';
+// Industries landing page
+
+@import '../partials/vars';
+@import '../partials/mixins';
 
 .industries {
   padding-top: $spacing-1;

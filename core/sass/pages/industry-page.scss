@@ -1,5 +1,8 @@
 
-@import 'partials/default';
+// Industry page
+
+@import '../partials/vars';
+@import '../partials/mixins';
 
 .industry-pullout {
   padding: $spacing-2 0;

@@ -1,7 +1,8 @@
 
-@import 'partials/default';
-@import 'partials/vars';
-@import 'partials/mixins';
+// Home/landing page
+
+@import '../partials/vars';
+@import '../partials/mixins';
 
 .hero {
   padding: $spacing-1 + $spacing-3 0 $spacing-1;
