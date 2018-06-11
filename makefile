@@ -44,6 +44,9 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export INVEST_UI_RECAPTCHA_PRIVATE_KEY=debug; \
 	export INVEST_UI_GOOGLE_TAG_MANAGER_ID=GTM-TC46J8K; \
 	export INVEST_UI_GOOGLE_TAG_MANAGER_ENV=&gtm_auth=Ok4kd4Wf_NKgs4c5Z5lUFQ&gtm_preview=env-6&gtm_cookies_win=x; \
+	export INVEST_UI_ZENDESK_EMAIL=debug; \
+	export INVEST_UI_ZENDESK_SUBDOMAIN=debugdebugdebug; \
+	export INVEST_UI_ZENDESK_TOKEN=debug; \
 	export INVEST_UI_UTM_COOKIE_DOMAIN=.great; \
 	export INVEST_UI_NOCAPTCHA=false; \
 	export INVEST_UI_SESSION_COOKIE_SECURE=false; \
@@ -95,6 +98,9 @@ DEBUG_SET_ENV_VARS := \
 	export RECAPTCHA_PRIVATE_KEY=debug; \
 	export GOOGLE_TAG_MANAGER_ID=GTM-TC46J8K; \
 	export GOOGLE_TAG_MANAGER_ENV=&gtm_auth=Ok4kd4Wf_NKgs4c5Z5lUFQ&gtm_preview=env-6&gtm_cookies_win=x; \
+	export ZENDESK_EMAIL=""; \
+	export ZENDESK_SUBDOMAIN=""; \
+	export ZENDESK_TOKEN=debug; \
 	export UTM_COOKIE_DOMAIN=.great; \
 	export NOCAPTCHA=false; \
 	export SESSION_COOKIE_SECURE=false; \
