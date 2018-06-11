@@ -36,10 +36,7 @@ docker_run:
 	docker-compose up --build
 
 DOCKER_SET_DEBUG_ENV_VARS := \
-	export INVEST_UI_API_CLIENT_CLASS_NAME=unit-test; \
-	export INVEST_UI_API_SIGNATURE_SECRET=debug; \
-	export INVEST_UI_API_CLIENT_BASE_URL=http://api.trade.great:8000; \
-	export INVEST_UI_PORT=8012; \
+	export INVEST_UI_PORT=8005; \
 	export INVEST_UI_SECRET_KEY=debug; \
 	export INVEST_UI_DEBUG=true; \
 	export INVEST_UI_FEATURE_CONTACT_COMPANY_FORM_ENABLED=true; \
@@ -47,12 +44,7 @@ DOCKER_SET_DEBUG_ENV_VARS := \
 	export INVEST_UI_RECAPTCHA_PRIVATE_KEY=debug; \
 	export INVEST_UI_GOOGLE_TAG_MANAGER_ID=GTM-TC46J8K; \
 	export INVEST_UI_GOOGLE_TAG_MANAGER_ENV=&gtm_auth=Ok4kd4Wf_NKgs4c5Z5lUFQ&gtm_preview=env-6&gtm_cookies_win=x; \
-	export INVEST_UI_ZENDESK_EMAIL=debug; \
-	export INVEST_UI_ZENDESK_SUBDOMAIN=debugdebugdebug; \
-	export INVEST_UI_ZENDESK_TOKEN=debug; \
 	export INVEST_UI_UTM_COOKIE_DOMAIN=.great; \
-	export INVEST_UI_THUMBNAIL_STORAGE_CLASS_NAME=local-storage; \
-	export INVEST_UI_THUMBNAIL_KVSTORE_CLASS_NAME=dummy; \
 	export INVEST_UI_NOCAPTCHA=false; \
 	export INVEST_UI_SESSION_COOKIE_SECURE=false; \
 	export INVEST_UI_SECURE_HSTS_SECONDS=0; \
@@ -98,20 +90,12 @@ DEBUG_SET_ENV_VARS := \
 	export PORT=8012; \
 	export SECRET_KEY=debug; \
 	export DEBUG=true ;\
-	export API_SIGNATURE_SECRET=debug; \
-	export API_CLIENT_BASE_URL=http://api.trade.great:8000; \
 	export FEATURE_CONTACT_COMPANY_FORM_ENABLED=true; \
 	export RECAPTCHA_PUBLIC_KEY=debug; \
 	export RECAPTCHA_PRIVATE_KEY=debug; \
 	export GOOGLE_TAG_MANAGER_ID=GTM-TC46J8K; \
 	export GOOGLE_TAG_MANAGER_ENV=&gtm_auth=Ok4kd4Wf_NKgs4c5Z5lUFQ&gtm_preview=env-6&gtm_cookies_win=x; \
-	export ZENDESK_EMAIL=""; \
-	export ZENDESK_SUBDOMAIN=""; \
-	export ZENDESK_TOKEN=debug; \
 	export UTM_COOKIE_DOMAIN=.great; \
-	export THUMBNAIL_STORAGE_CLASS_NAME=local-storage; \
-	export THUMBNAIL_KVSTORE_CLASS_NAME=redis; \
-	export REDIS_URL=redis://localhost:6379; \
 	export NOCAPTCHA=false; \
 	export SESSION_COOKIE_SECURE=false; \
 	export SECURE_HSTS_SECONDS=0 ;\
@@ -138,8 +122,10 @@ debug_shell:
 debug: test_requirements debug_test
 
 heroku_deploy_dev:
-	docker build -t registry.heroku.com/directory-ui-supplier-dev/web .
-	docker push registry.heroku.com/directory-ui-supplier-dev/web
+	./docker/install_heroku_cli.sh
+	docker login --username=$$HEROKU_EMAIL --password=$$HEROKU_TOKEN registry.heroku.com
+	~/bin/heroku-cli/bin/heroku container:push web --app invest-ui-dev
+	~/bin/heroku-cli/bin/heroku container:release web --app invest-ui-dev
 
 integration_tests:
 	cd $(mktemp -d) && \

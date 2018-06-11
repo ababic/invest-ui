@@ -1,11 +1,9 @@
-from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls import url, include
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
-from django.views.static import serve
+from core import views
 
-import core.views
 import conf.sitemaps
 
 sitemaps = {
@@ -30,53 +28,43 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     url(
         r"^$",
-        core.views.LandingPageCMSView.as_view(),
+        views.LandingPageCMSView.as_view(),
         name="index"
     ),
     url(
         r"^industries/$",
-        core.views.IndustriesLandingPageCMSView.as_view(),
+        views.IndustriesLandingPageCMSView.as_view(),
         name="industries"
     ),
     url(
         r"^industries/(?P<parent_slug>[\w-]+)/(?P<slug>[\w-]+)/$",
-        core.views.IndustryPageCMSView.as_view(),
+        views.IndustryPageCMSView.as_view(),
         name="industry"
     ),
     url(
         r"^industries/(?P<slug>[\w-]+)/$",
-        core.views.IndustryPageCMSView.as_view(),
+        views.IndustryPageCMSView.as_view(),
         name="industry"
     ),
     url(
         r"^uk-setup-guide/$",
-        core.views.SetupGuideLandingPageCMSView.as_view(),
+        views.SetupGuideLandingPageCMSView.as_view(),
         name="setup-guide"
     ),
     url(
         r"^uk-setup-guide/(?P<slug>[\w-]+)/$",
-        core.views.SetupGuidePageCMSView.as_view(),
+        views.SetupGuidePageCMSView.as_view(),
         name="guide-page"
     ),
     url(
         r"^contact/$",
-        core.views.ContactFormView.as_view(),
+        views.ContactFormView.as_view(),
         name="contact"
     ),
     url(
         r"^(?P<slug>[\w-]+)/$",
-        core.views.PlainCMSPageView.as_view(),
+        views.PlainCMSPageView.as_view(),
         name="cms-page"
     ),
     prefix_default_language=False,
 )
-
-
-if settings.THUMBNAIL_STORAGE_CLASS_NAME == 'local-storage':
-    urlpatterns += [
-        url(
-            r'^media/(?P<path>.*)$',
-            serve,
-            {'document_root': settings.MEDIA_ROOT}
-        ),
-    ]
