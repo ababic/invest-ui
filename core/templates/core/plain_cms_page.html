@@ -15,7 +15,7 @@
   <div class="container">
     <div class="grid-row">
       <div class="column-two-thirds">
-        {{ page.body|add_export_elements_classes|add_anchors|add_href_target:request|safe }}
+        {{ page.content|add_export_elements_classes|add_anchors|add_href_target:request|safe }}
       </div>
     </div>
   </div>

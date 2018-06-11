@@ -21,20 +21,20 @@
         </div>
       </div>
     </div>
-
-    <div class="grid-row">
-      <div class="column-third">
-        {% url 'guide-page' as guide_page_url %}
-        {% include 'directory_components/card.html' with url=guide_page_url title='Apply for a UK visa' description='Anyone from outside of the European Economic Area and Switzerland may need to apply for a UK visa to work in the UK or visit for business reasons.' %}
-      </div>
-      <div class="column-third">
-        {% include 'directory_components/card.html' with url=guide_page_url title='Establish a base for business in the UK' description='The UK has a straightforward planning process, a wide range of properties, and incentives that help businesses to set up and expand.' %}
-      </div>
-      <div class="column-third">
-        {% include 'directory_components/card.html' with url=guide_page_url title='Hire skilled workers for your UK operations' description='The UK has a world-class pool of talent and business-friendly employment laws. You can also bring employees to the UK from other countries through a flexible visa system.' %}
+  </div>
+  {% if localised_children_setup_guides.0 %}
+    <div class="container">
+      <div class="grid-row">
+        {% for guide in localised_children_setup_guides %}
+          <div class="column-third">
+            {% url 'setup' as setup_url %}
+            {% with setup_url|add:guide.meta.slug as guide_url %}
+              {% include 'directory_components/card.html' with url=guide_url title=guide.title description=guide.description %}
+            {% endwith %}
+          </div>
+        {% endfor %}
       </div>
     </div>
-
-  </div>
+  {% endif %}
 </section>
 {% endblock %}

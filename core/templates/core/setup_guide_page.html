@@ -1,6 +1,7 @@
 {% extends 'core/base_cms.html' %}
 {% load static from staticfiles %}
 {% load first_paragraph first_heading grouper from cms_tags %}
+{% load add_export_elements_classes from cms_tags %}
 
 {% block head_css %}
 {{ block.super }}
@@ -9,53 +10,24 @@
 
 {% block content %}
 
-{% include 'directory_components/hero.html' with hero_text="Apply for a UK visa" %}
+{% include 'directory_components/hero.html' with hero_text=page.heading %}
 
 <section class="setup-guide">
   <div class="container">
-    <h2 class="heading-large">Apply for a UK visa</h2>
+    <h2 class="heading-large">{{ page.sub_heading }}</h2>
     <ul>
+      {% for section in page.subsections %}
       <li>
-        <a href="#" class="accordion-expander heading-medium link">UK immigration and visa rules for investors</a>
+        <a href="#" class="accordion-expander heading-medium link">{{ section.title }}</a>
         <div class="accordion-content" aria-labelledby="accordion-content">
           <div class="grid-row">
             <div class="column-two-thirds">
-              <p>UK immigration visa rules are clear and applying for a visa is straightforward. You need a visa if you are coming to the UK from outside of the European Economic Area (EEA) and Switzerland.</p>
-              <p>Before coming to the UK, you should:</p>
-              <ul class="list list-bullet">
-                <li>check if you need a UK visa</li>
-                <li>book an appointment at your nearest visa application centre if necessary</li>
-              </ul>
-              <p>There are more than 300 visa application centres worldwide, with application processing of less than 7 days available in more than 100 of them. In many countries, including India and China you can get a visa decision within 24 hours.</p>
+              {{ section.content|add_export_elements_classes|safe }}
             </div>
           </div>
         </div>
       </li>
-
-      <li>
-        <a href="#" class="accordion-expander heading-medium link">Services to help you get a UK business visa</a>
-        <div class="accordion-content" aria-labelledby="accordion-content">
-          <div class="grid-row">
-            <div class="column-two-thirds">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-          </div>
-        </div>
-      </li>
-
-      <li>
-        <a href="#" class="accordion-expander heading-medium link">UK visas: quick guide</a>
-        <div class="accordion-content" aria-labelledby="accordion-content">
-          <div class="grid-row">
-            <div class="column-two-thirds">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-          </div>
-        </div>
-      </li>
-
+      {% endfor %}
     </ul>
 
   </div>

@@ -11,22 +11,22 @@
 
 {% include 'directory_components/hero.html' with hero_text=page.heading background_image_url=page.hero_image.url %}
 
-<section class="industries">
-  <div class="container">
+{% if page.children_sectors.0 %}
+  <section class="industries">
+    <div class="container">
 
-    <div class="grid-row">
-      <div class="column-third">
-        {% url 'industry' as industry_url %}
-        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Automot.fbd04514.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url=industry_url title='Automotive' %}
+      <div class="grid-row">
+        {% for industry in localised_children_sectors %}
+          <div class="column-third">
+            {% url 'industries' as industries_url %}
+            {% with industries_url|add:industry.meta.slug as industry_url %}
+              {% include 'directory_components/labelled_card.html' with img_src=industry.hero_image.url img_alt='' url=industry_url title=industry.title %}
+            {% endwith %}
+          </div>
+        {% endfor %}
       </div>
-      <div class="column-third">
-        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/North_E.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Capital investment'%}
-      </div>
-      <div class="column-third">
-        {% include 'directory_components/labelled_card.html' with img_src='https://invest-cms-prod.s3.amazonaws.com/images/Creativ.2e16d0ba.fill-320x150.format-jpeg.jpegquality-90.jpg' img_alt='' url='#' title='Creative industries' %}
-      </div>
+
     </div>
-
-  </div>
-</section>
+  </section>
+{% endif %}
 {% endblock %}

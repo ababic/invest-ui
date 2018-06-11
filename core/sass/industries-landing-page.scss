@@ -10,6 +10,12 @@
 a.labelled-card {
   min-height: auto;
 
+  img {
+    max-height: 150px;
+    object-fit: cover;
+    width: auto;
+  }
+
   .card-inner {
     display: none;
   }

@@ -1,7 +1,7 @@
 
 @import 'partials/default';
 
-.industry-intro {
+.industry-pullout {
   padding: $spacing-2 0;
   background-color: $stone-20;
 
@@ -16,7 +16,7 @@
     margin-left: 0;
     margin-top: 0;
 
-    .font-xxlarge {
+    .font-xlarge, .font-xxlarge {
       color: $mid-blue;
     }
   }
@@ -24,10 +24,19 @@
 
 .industry-page-accordions {
   padding-top: $spacing-2;
+
+  .accordion-expander {
+    width: calc(100% / 3 * 2);
+  }
+
+  .map {
+    float: right;
+    width: 50%;
+  }
 }
 
 @media (max-width: 640px) {
-  .industry-intro {
+  .industry-pullout {
     .grid-row {
       flex-direction: column-reverse;
     }

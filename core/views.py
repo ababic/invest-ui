@@ -114,122 +114,93 @@ class CMSFeatureFlagMixin:
 
 class LandingPageCMSView(
     mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
-    CMSFeatureFlagMixin, TemplateView
+    mixins.ChildPageLocalSlugs, mixins.GetCMSPageLanguageRedirect, TemplateView
 ):
     active_view_name = 'index'
     template_name = 'core/landing_page.html'
+    slug = 'invest-home-page'
+    app = 'invest'
+    subpage_groups = ['sectors', 'guides']
 
     def get_context_data(self, *args, **kwargs):
         return super().get_context_data(
             page=self.get_cms_page(),
-            search_form=forms.SearchForm(),
-            is_landing_page=True,
             *args,
             **kwargs
         )
-
-    def get_cms_page(self):
-        response = helpers.cms_client.lookup_by_slug(
-            slug='invest-home-page',
-            language_code=translation.get_language(),
-            draft_token=self.request.GET.get('draft_token'),
-        )
-        return helpers.handle_cms_response(response)
 
 
 class IndustriesLandingPageCMSView(
     mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
-    CMSFeatureFlagMixin, TemplateView
+    mixins.ChildPageLocalSlugs, mixins.GetCMSPageLanguageRedirect, TemplateView
 ):
-    active_view_name = 'index'
+    active_view_name = 'industries'
     template_name = 'core/industries_landing_page.html'
+    slug = 'invest-sector-landing-page'
+    service = 'invest'
+    subpage_groups = ['children_sectors']
 
     def get_context_data(self, *args, **kwargs):
         return super().get_context_data(
             page=self.get_cms_page(),
-            search_form=forms.SearchForm(),
-            is_industry_page=True,
             *args,
             **kwargs
         )
 
-    def get_cms_page(self):
-        response = helpers.cms_client.lookup_by_slug(
-            slug='invest-sector-landing-page',
-            language_code=translation.get_language(),
-            draft_token=self.request.GET.get('draft_token'),
-        )
-        return helpers.handle_cms_response(response)
-
 
 class IndustryPageCMSView(
-    mixins.CMSLanguageSwitcherMixin, mixins.GetCMSPageMixin,
-    CMSFeatureFlagMixin, TemplateView
+    mixins.CMSLanguageSwitcherMixin, mixins.GetCMSPageLanguageRedirect,
+    mixins.ChildPageLocalSlugs, mixins.ActiveViewNameMixin, TemplateView
 ):
-    active_view_name = 'index'
+    active_view_name = 'industries'
     template_name = 'core/industry_page.html'
+    subpage_groups = ['children_sectors']
 
     def get_context_data(self, *args, **kwargs):
+        page = self.get_cms_page()
+        has_child_pages = len(page['children_sectors']) > 0
         return super().get_context_data(
-            page=self.get_cms_page(),
-            search_form=forms.SearchForm(),
-            is_industry_page=True,
+            page=page,
+            has_child_pages=has_child_pages,
             *args,
             **kwargs
         )
 
 
 class SetupGuideLandingPageCMSView(
-    mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
-    CMSFeatureFlagMixin, TemplateView
+    mixins.GetCMSPageLanguageRedirect, mixins.CMSLanguageSwitcherMixin,
+    mixins.ChildPageLocalSlugs, mixins.ActiveViewNameMixin, TemplateView
 ):
-    active_view_name = 'index'
+    active_view_name = 'setup-guide'
     template_name = 'core/setup_guide_landing_page.html'
+    slug = 'invest-setup-guide-landing-page'
+    subpage_groups = ['children_setup_guides']
 
     def get_context_data(self, *args, **kwargs):
         return super().get_context_data(
             page=self.get_cms_page(),
-            search_form=forms.SearchForm(),
-            is_setup_guide_page=True,
             *args,
             **kwargs
         )
 
-    def get_cms_page(self):
-        response = helpers.cms_client.lookup_by_slug(
-            slug='invest-setup-guide-landing-page',
-            language_code=translation.get_language(),
-            draft_token=self.request.GET.get('draft_token'),
-        )
-        return helpers.handle_cms_response(response)
-
 
 class SetupGuidePageCMSView(
-    mixins.CMSLanguageSwitcherMixin, mixins.ActiveViewNameMixin,
-    CMSFeatureFlagMixin, TemplateView
+    mixins.CMSLanguageSwitcherMixin, mixins.GetCMSPageLanguageRedirect,
+    mixins.ActiveViewNameMixin, TemplateView
 ):
-    active_view_name = 'index'
+    active_view_name = 'setup-guide'
     template_name = 'core/setup_guide_page.html'
 
     def get_context_data(self, *args, **kwargs):
         return super().get_context_data(
             page=self.get_cms_page(),
-            search_form=forms.SearchForm(),
-            is_setup_guide_page=True,
             *args,
             **kwargs
         )
 
-    def get_cms_page(self):
-        response = helpers.cms_client.lookup_by_slug(
-            slug=cms_constants.FIND_A_SUPPLIER_LANDING_SLUG,
-            language_code=translation.get_language(),
-            draft_token=self.request.GET.get('draft_token'),
-        )
-        return helpers.handle_cms_response(response)
 
-
-class ContactFormView(TemplateView):
+class ContactFormView(mixins.ActiveViewNameMixin, TemplateView):
+    active_view_name = 'contact'
     template_name = 'core/contact.html'
     success_url = 'success/'
     form_class = forms.ContactForm
@@ -298,34 +269,18 @@ class ContactFormView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(
             contact_form=forms.ContactForm(),
-            is_contact_page=True,
             *args, **kwargs
         )
         context['success_message'] = _('Your feedback has been submitted')
         return context
 
 
-class TermsAndConditionsView(TemplateView):
+class PlainCMSPageView(TemplateView):
     template_name = 'core/plain_cms_page.html'
 
     def get_context_data(self, *args, **kwargs):
         response = cms_client.lookup_by_slug(
-            slug=EXPORT_READINESS_TERMS_AND_CONDITIONS_SLUG,
-            language_code=translation.get_language(),
-            draft_token=self.request.GET.get('draft_token'),
-        )
-        return super().get_context_data(
-            page=handle_cms_response(response),
-            *args, **kwargs
-        )
-
-
-class PrivacyAndCookiesView(TemplateView):
-    template_name = 'core/plain_cms_page.html'
-
-    def get_context_data(self, *args, **kwargs):
-        response = cms_client.lookup_by_slug(
-            slug=EXPORT_READINESS_PRIVACY_AND_COOKIES_SLUG,
+            slug='invest-'+kwargs['slug'],
             language_code=translation.get_language(),
             draft_token=self.request.GET.get('draft_token'),
         )
