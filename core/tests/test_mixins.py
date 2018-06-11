@@ -8,7 +8,7 @@ from core import mixins
 
 
 @pytest.mark.parametrize('method,expected', (
-    ('get', '"4e1fd0f937954391b7ece1306b984c98"'),
+    ('get', '"819ac1e81762e78b470f5ce08e15cd15"'),
     ('post', None),
     ('patch', None),
     ('put', None),
@@ -96,11 +96,13 @@ def test_cms_language_switcher_active_language_unavailable(rf):
             }
             return super().get_context_data(page=page, *args, **kwargs)
 
-    request = rf.get('/')
+    request = rf.get('/fr/')
     with translation.override('fr'):
         response = MyView.as_view()(request)
 
     assert response.status_code == 200
+    assert response.context_data['language_switcher']['available_languages']\
+        == [('en-gb', 'English'), ('de', 'German')]
     assert response.context_data['language_switcher']['show'] is False
 
 
@@ -118,11 +120,10 @@ def test_cms_language_switcher_active_language_available(rf):
             }
             return super().get_context_data(page=page, *args, **kwargs)
 
-    request = rf.get('/')
+    request = rf.get('/de/')
     with translation.override('de'):
         response = MyView.as_view()(request)
 
     assert response.status_code == 200
     context = response.context_data['language_switcher']
     assert context['show'] is True
-    assert context['form'].initial['lang'] == 'de'

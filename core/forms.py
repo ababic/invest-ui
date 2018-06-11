@@ -3,7 +3,6 @@ from crispy_forms.layout import Layout, Fieldset, Field, Submit, HTML, Div
 
 from captcha.fields import ReCaptchaField
 
-from django.conf import settings
 from django.forms import Select, Textarea
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.utils.translation import ugettext as _
@@ -348,16 +347,22 @@ class ContactForm(forms.Form):
         )
         super().__init__(*args, **kwargs)
 
-    name = fields.CharField(label=_('Name'))
-    job_title = fields.CharField(label=_('Job title'))
-    email = fields.EmailField(label=_('Email address'))
+    name = fields.CharField(
+        label=_('Name'),
+        required=True)
+    job_title = fields.CharField(
+        label=_('Job title'),
+        required=True)
+    email = fields.EmailField(
+        label=_('Email address'),
+        required=True)
     phone_number = fields.CharField(
         label=_('Phone number'),
-        required=True
+        required=True)
 
-    )
-
-    company_name = fields.CharField(label=_('Company name'))
+    company_name = fields.CharField(
+        label=_('Company name'),
+        required=True)
     company_website = fields.CharField(
         label=_('Website URL'),
         required=False
@@ -453,17 +458,3 @@ class SearchForm(forms.Form):
         ),
         widget=Select(attrs={'class': 'bidi-rtl'})
     )
-
-
-class LanguageForm(forms.Form):
-    lang = fields.ChoiceField(
-        choices=[]  # set by __init__
-    )
-
-    def __init__(self, language_choices=settings.LANGUAGES, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['lang'].choices = language_choices
-
-    def is_language_available(self, language_code):
-        language_codes = [code for code, _ in self.fields['lang'].choices]
-        return language_code in language_codes
